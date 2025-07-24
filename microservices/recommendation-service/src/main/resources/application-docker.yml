@@ -1,1 +1,5 @@
 server.port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://recommendation-postgresql:5432/recommendation-db

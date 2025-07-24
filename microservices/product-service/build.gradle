@@ -8,6 +8,12 @@ group = 'se.magnus.microservices.core.product'
 version = '1.0.0-SNAPSHOT'
 sourceCompatibility = '17'
 
+ext {
+    mapstructVersion = "1.5.3.Final"
+    postgresqlVersion = "42.7.3"
+    lombokVersion = "1.18.36"
+}
+
 repositories {
     mavenCentral()
 }
@@ -21,14 +27,29 @@ dependencies {
     implementation project(':util')
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.apache.commons:commons-lang3'
 
-    compileOnly 'org.projectlombok:lombok:1.18.36'
-    annotationProcessor 'org.projectlombok:lombok:1.18.36'
-    testCompileOnly 'org.projectlombok:lombok:1.18.36'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
+    runtimeOnly "org.postgresql:postgresql:${postgresqlVersion}"
+
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    compileOnly "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+    testAnnotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    implementation platform('org.testcontainers:testcontainers-bom:1.17.6')
+    testImplementation 'org.testcontainers:testcontainers'
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation 'org.testcontainers:postgresql'
 }
 
 tasks.named('test') {
